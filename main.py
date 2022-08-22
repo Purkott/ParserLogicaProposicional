@@ -120,7 +120,35 @@ def checaformulaunaria(expressao):
       if not checaconstante(expressao[2]) and not checaproposicao(expressao[2]) and not expressao[2] == "(":
         return False
       else:
-        if
+        if expressao[2] == "(":
+          if not checaformulaunaria(expressao[2:-1]) and not checaformulabinaria(expressao[2:-1]):
+            return False
+        else:
+          if expressao[3] != ")":
+            return False
+
+def checaformulabinaria(expressao):
+  if expressao[0] != "(":
+    return False
+  else:
+    if expressao[1] not in ["∨","∧","→","↔"]:
+      return False
+    else:
+      if not checaconstante(expressao[2]) and not checaproposicao(expressao[2]) and not expressao[2] == "(":
+        return False
+      else:
+        if expressao[2] == "(":
+          if not checaformulaunaria(expressao[2:-1]) and not checaformulabinaria(expressao[2:-1]):
+            return False
+        else:
+          if not checaconstante(expressao[3]) and not checaproposicao(expressao[2]) and not expressao[2] == "(":
+            return False
+          else:
+            if expressao[2] == "(":
+              if not checaformulaunaria(expressao[2:-1]) and not checaformulabinaria(expressao[2:-1]):
+                return False
+              if expressao[3] != ")":
+                return False
     
     
 
