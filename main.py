@@ -110,6 +110,20 @@ def checaproposicao(expressao):
   else:
     return False
 
+def checaformulaunaria(expressao):
+  if expressao[0] != "(":
+    return False
+  else:
+    if expressao[1] != "¬":
+      return False
+    else:
+      if not checaconstante(expressao[2]) and not checaproposicao(expressao[2]) and not expressao[2] == "(":
+        return False
+      else:
+        if
+    
+    
+
 
 def checaformula(expressao):
   for i in range(len(expressao)):
@@ -125,7 +139,17 @@ def checaformula(expressao):
     expressao.append(": valida")
     return print(*expressao)
   else:
-    return print(expressao)
+    if checaproposicao(expressao):
+      expressao.append(": valida")
+      return print(*expressao)
+    else:
+      if expressao[0] == "(":
+        if checaformulaunaria(expressao):
+          expressao.append(": valida")
+          return print(*expressao)
+      else:
+        expressao.append(": invalida")
+        return print(*expressao)
 
   
 
