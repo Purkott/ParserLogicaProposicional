@@ -34,7 +34,7 @@ para validar seu trabalho. Para isso, caberá ao professor incluir o arquivo no 
 programa carregando o arquivo de testes. 
 '''
 
-validos = "abcdefghijklmnopqrstuvwxyz1234567890↔→∧∨TF¬()"
+validos = "abcdefghijklmnopqrstuvwxyz1234567890↔→∧∨TF¬)"
 proposicao = "abcdefghijklmnopqrstuvwxyz1234567890"
 
 
@@ -179,7 +179,64 @@ def checaformula(expressao):
         expressao.append(": invalida")
         return print(*expressao)
 
+
+def arrumaString(expressao1):
   
+  expressao = []
+  formula = ""
+  contadorString = 0
+  contadorParenteses = 0
+  while(contadorString < len(expressao1)):
+    if(expressao1[contadorString] in validos):
+      if expressao1[contadorString] in proposicao:
+        if contadorString<len(expressao1)-1 and expressao1[contadorString+1] in proposicao:
+          formula = expressao1[contadorString] + expressao1[contadorString+1]
+          expressao.append(formula)
+          formula = ""
+          contadorString = contadorString + 2
+        else:
+          expressao.append(expressao1[contadorString])
+          contadorString= contadorString+1
+      else:  
+        expressao.append(expressao1[contadorString])
+        contadorString= contadorString+1
+    if(expressao1[contadorString] == "(" and contadorString != 0):
+      contadorParenteses =contadorParenteses+1
+      formula = formula + expressao1[contadorString]
+      contadorString = contadorString+1
+      while(contadorParenteses > 0 and contadorString < len(expressao1)):
+        if (expressao1[contadorString] in validos):
+          formula = formula + expressao1[contadorString]
+          contadorString =contadorString+1
+          break
+        if (expressao1[contadorString] == ")"):
+          formula = formula + expressao1[contadorString]
+          contadorString =contadorString+1
+          contadorParenteses =contadorParenteses-1
+          break
+        if (expressao1[contadorString] == "("):
+          formula = formula + expressao1[contadorString]
+          contadorString =contadorString+1
+          contadorParenteses =contadorParenteses+1
+          break
+        if(contadorParenteses == 0 or contadorString == len(expressao1)-1):
+          expressao.append(formula)
+          formula = ""
+          break
+        else:
+          formula = formula + " "
+          contadorString=contadorString+1
+    
+    if(expressao1[contadorString] == "(" and contadorString == 0):
+      expressao.append(expressao1[contadorString])
+      contadorString = contadorString + 1
+    else:
+      contadorString=contadorString+1
+      
+  print(expressao)    
+  return expressao
 
 start()
-checaformula(expressao)
+expressao = arrumaString(arquivo1[1])
+arrumaString(expressao[2])
+#checaformula(expressao)
