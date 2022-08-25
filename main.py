@@ -35,7 +35,8 @@ programa carregando o arquivo de testes.
 '''
 
 validos = "abcdefghijklmnopqrstuvwxyz1234567890↔→∧∨TF¬)"
-proposicao = "abcdefghijklmnopqrstuvwxyz1234567890"
+proposicaoL = "abcdefghijklmnopqrstuvwxyz"
+proposicaoN = "0123456789"
 
 
 def start():
@@ -187,52 +188,53 @@ def arrumaString(expressao1):
   contadorString = 0
   contadorParenteses = 0
   while(contadorString < len(expressao1)):
-    if(expressao1[contadorString] in validos):
-      if expressao1[contadorString] in proposicao:
-        if contadorString<len(expressao1)-1 and expressao1[contadorString+1] in proposicao:
-          formula = expressao1[contadorString] + expressao1[contadorString+1]
-          expressao.append(formula)
-          formula = ""
-          contadorString = contadorString + 2
-        else:
-          expressao.append(expressao1[contadorString])
-          contadorString= contadorString+1
-      else:  
-        expressao.append(expressao1[contadorString])
-        contadorString= contadorString+1
+    if(expressao1[contadorString] == "(" and contadorString == 0):
+      formula.append(expressao1[contadorString])
+      contadorString = contadorString +1
     else:
-      if(expressao1[contadorString] == "(" and contadorString != 0):
-        contadorParenteses =contadorParenteses+1
-        formula = formula + expressao1[contadorString]
-        contadorString = contadorString+1
-        while(contadorParenteses > 0 and contadorString < len(expressao1)):
-          if (expressao1[contadorString] in validos):
-            formula = formula + expressao1[contadorString]
-            contadorString =contadorString+1
-          else:  
-            if (expressao1[contadorString] == ")"):
+      if(expressao1[contadorString] != " "):
+        if(expressao1[contadorString] == "("):
+          contadorParenteses = contadorParenteses + 1
+          formula = formula + "("
+          contadorString = contadorString +1
+          while(contadorParenteses > 0 and contadorString < len(expressao1)):
+            if(expressao1[contadorString] == "("):
+              contadorParenteses = contadorParenteses + 1
               formula = formula + expressao1[contadorString]
-              contadorString =contadorString+1
-              contadorParenteses =contadorParenteses-1
+              contadorString = contadorString +1
             else:
-              if (expressao1[contadorString] == "("):
-                formula = formula + expressao1[contadorString]
-                contadorString =contadorString+1
-                contadorParenteses =contadorParenteses+1
+              if(expressao1[contadorString] == ")"):
+                if(contadorParenteses == 1):
+                  formula = formula + ")"
+                  contadorString = contadorString +1
+                  contadorParenteses = 0
+                else:
+                  formula = formula + ")"
+                  contadorString = contadorString +1
+                  contadorParenteses  = contadorParenteses- 1
               else:
-                if(contadorParenteses == 0 or contadorString == len(expressao1)-1):
+                if(contadorString == len(expressao1))-1:
+                  formula = formula + expressao1[contadorString]
                   expressao.append(formula)
                   formula = ""
-           
                 else:
-                  formula = formula + " "
-                  contadorString=contadorString+1
-      else:
-        if(expressao1[contadorString] == "(" and contadorString == 0):
-          expressao.append(expressao1[contadorString])
-          contadorString = contadorString + 1
+                  formula = formula + expressao1[contadorString]
+                  contadorString = contadorString +1
         else:
-          contadorString=contadorString+1
+          formula = formula + expressao1[contadorString]
+          contadorString = contadorString +1                  
+      else:
+        if(formula == ""):
+          contadorString = contadorString +1
+        else:
+          expressao.append(formula)
+          formula = ""
+          contadorString = contadorString +1
+      
+        
+        
+      
+    
       
   print(expressao)    
   return expressao
