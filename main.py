@@ -159,7 +159,10 @@ def arrumaFormula1(expressao):
     else:
       formula = ["invalida"]
   else:
-    formula = [expressao[0]]
+    if len(expressao) == 0:
+      formula = "invalida"
+    else:
+      formula = [expressao[0]]
   
   return formula
 

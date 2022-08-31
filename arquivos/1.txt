@@ -1,6 +1,6 @@
 5
 ( \neg a01 )
 ( \leftrightarrow a1 b7 )
-( \leftrightarrow ( \leftrightarrow  b0 ) ( \neg c1 ) )
+( \leftrightarrow ( \leftrightarrow b0 ) ( \neg c1 ) )
 T
 5

@@ -1,7 +1,8 @@
-6
-( \neg a0 )
-( \leftrightarrow a b )
-( \leftrightarrow ( \leftrightarrow a b ) ( \neg c ) )
-( \vee a b )
-( \wedge c d )
-( \rightarrow e f ) 
+7
+FF
+F0
+( \leftrightarrow T c )
+( \neg F )
+( \wadge c c4 )
+( \rightarrow T T ) 
+g1 g2
