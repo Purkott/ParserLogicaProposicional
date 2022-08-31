@@ -1,0 +1,7 @@
+6
+( \neg a1 b5)
+( \leftrightarrow a1 b2 )
+( \leftrightarrow ( \neg 5) ( \neg c ) )
+( \vee a4 b2 )
+( \wedge c dd )
+( \rightarrow e 12 ) 

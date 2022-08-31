@@ -56,7 +56,7 @@ def start():
   for x in range(int(arquivo1[0])):
     arquivo1.append(txt1.readline().strip())
   txt1.close()
-  '''
+  
   txt2 = open('arquivos/2.txt', 'r')
   arquivo2 = []
   arquivo2.append(txt2.readline().strip())
@@ -70,19 +70,10 @@ def start():
   for x in range(int(arquivo3[0])):
     arquivo3.append(txt3.readline().strip())
   txt3.close()
-  '''
-  global RESULTADO 
-  global ESTADO
-  global contadorString 
-  global contadorLinhas 
-  global contadorArquivo 
-  RESULTADO = " "
-  ESTADO = "ESTADO0"
-  contadorString = 0
-  contadorLinhas = 1
-  contadorArquivo = 1
-  #arquivos = [arquivo1,arquivo2,arquivo3]
-  arquivo = arquivo1.copy()
+
+
+
+ 
 
 def checaConstante(formula):
   if len(formula) == 1:
@@ -96,7 +87,7 @@ def checaConstante(formula):
 def checaProposicao(formula):
   if len(formula) == 1: 
     if len(formula[0]) < 3:
-      if len(formula[0]) == 1:
+      if len(formula[0]) < 2:
         if formula[0] in proposicao1 or formula[0] in proposicao2:
           return True
         else: 
@@ -155,11 +146,6 @@ def checaformula(expressao):
     return True
   else:
     return False
-  
-    
-def arrumaExpressao(expressao):
-  formula = expressao.rsplit(" ")
-  return print(formula)
 
 def arrumaFormula1(expressao):
   formula = []
@@ -195,12 +181,27 @@ def limpaLista(lista1,lista2):
 
   
   return lista
+
+def main():
+  global contadorArquivo
+  global contadorLinhas
+  global arquivo
+  global arquivos
+  arquivos = [arquivo1,arquivo2,arquivo3]
+  arquivo = []
+  contadorArquivo = 0
+  while(contadorArquivo < 3):
+    arquivo = arquivos[contadorArquivo]
+    contadorLinhas = 1
+    while contadorLinhas <= int(arquivo[0]):
+      
+      if checaformula(arquivo[contadorLinhas]):
+        print(arquivo[contadorLinhas] + ": valida")
+      else:
+        print(arquivo[contadorLinhas] + ": invalida")
+      contadorLinhas = contadorLinhas + 1
+    contadorArquivo = contadorArquivo + 1
   
   
 start()
-arrumaExpressao(arquivo[1])
-print(checaformula(arquivo[1]))
-arrumaExpressao(arquivo[2])
-print(checaformula(arquivo[2]))
-arrumaExpressao(arquivo[3])
-print(checaformula(arquivo[3]))
+main()

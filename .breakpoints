@@ -2,40 +2,10 @@
   "files": {
     "main.py": [
       {
-        "id": "f7a0f18f-13bc-4aae-a0d6-e3e5073cb340",
-        "line": 132,
-        "version": 9352,
-        "index": 4274
-      },
-      {
-        "id": "d7dec678-d63d-4efb-a1e3-7443b81a0143",
-        "line": 133,
-        "version": 9352,
-        "index": 4317
-      },
-      {
-        "id": "4c0c0da2-7320-42c7-9028-445352052ecf",
-        "line": 137,
-        "version": 9320,
-        "index": 4440
-      },
-      {
-        "id": "8a0fcadd-d078-4dcd-b0e3-862c8e6bed2e",
-        "line": 140,
-        "version": 9400,
-        "index": 4505
-      },
-      {
-        "id": "59e7054e-a409-495f-946e-c14d73ce7cbf",
-        "line": 157,
-        "version": 9320,
-        "index": 4859
-      },
-      {
-        "id": "a1a8cd4a-a14d-4901-acb3-b80916ae8fc4",
-        "line": 188,
-        "version": 9320,
-        "index": 5714
+        "id": "d6b65d28-9445-4258-b0d2-ac3003e5dd06",
+        "line": 162,
+        "version": 9749,
+        "index": 5072
       }
     ]
   }

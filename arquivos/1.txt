@@ -1,7 +1,6 @@
-6
-( \neg a0 )
-( \leftrightarrow a b )
-( \leftrightarrow ( \leftrightarrow a b ) ( \neg c ) )
-( \vee a b )
-( \wedge c d )
-( \rightarrow e f ) 
+5
+( \neg a01 )
+( \leftrightarrow a1 b7 )
+( \leftrightarrow ( \leftrightarrow  b0 ) ( \neg c1 ) )
+T
+5
