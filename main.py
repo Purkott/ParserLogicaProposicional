@@ -130,9 +130,10 @@ def checaFormulaBin(formula):
   formula3 = []
   if formula[0] == abreParen and formula[1] in operadorBin:
     formula1 = arrumaFormula1(formula[2:])
-    formula2 = arrumaFormula2(formula[2:])
-    formula3.append(formula1)
-    formula3.append(formula2)
+    formula2 = arrumaFormula2(formula[2:-1])
+    formula3 = formula1.copy()
+    for x in formula2:
+      formula3.append(x)
     if len(formula) - len(formula3) != 3:
       return False
     else:
@@ -172,7 +173,7 @@ def arrumaFormula1(expressao):
     else:
       formula = ["invalida"]
   else:
-    formula = expressao[0]
+    formula = [expressao[0]]
   
   return formula
 
