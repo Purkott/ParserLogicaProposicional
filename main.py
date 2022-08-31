@@ -33,10 +33,13 @@ números  diferentes  de  expressões  proposicionais.  O  professor  irá  incl
 para validar seu trabalho. Para isso, caberá ao professor incluir o arquivo no seu repl.it e rodar o seu 
 programa carregando o arquivo de testes. 
 '''
-
-validos = "abcdefghijklmnopqrstuvwxyz1234567890↔→∧∨TF¬)"
-proposicaoL = "abcdefghijklmnopqrstuvwxyz"
-proposicaoN = "0123456789"
+constante = ["T","F"]
+abreParen = "("
+fechaParen = ")"
+operadorUn = "\\neg"
+operadorBin = ["\\vee", "\\wedge", "\\rightarrow", "\\leftrightarrow"]
+proposicao1 = "abcdefghijklmnopqrstuvwxyz"
+proposicao2 = "0123456789"
 
 
 def start():
@@ -80,166 +83,123 @@ def start():
   contadorArquivo = 1
   #arquivos = [arquivo1,arquivo2,arquivo3]
   arquivo = arquivo1.copy()
-  formula = ""
-  for x in arquivo[1]:
-    if x != " ":
-      formula = formula + "" + x
-      if arquivo[1][-1] == x:
-        expressao.append(formula)
-        
-    else:
-      expressao.append(formula)
-      formula = ""
-    
-  print(expressao)
 
-def checaconstante(expressao):
-    if (expressao[0] == "T" or expressao[0] == "F"):
-        if len(expressao) < 2:
+def checaConstante(formula):
+  if len(formula) == 1:
+    if formula[0] == constante[0] or formula[0] == constante[1]:
+      return True
+    else:
+      return False
+  else:
+    return False
+
+def checaProposicao(formula):
+  if len(formula) == 1: 
+    if len(formula[0]) < 3:
+      if len(formula[0]) == 1:
+        if formula[0] in proposicao1 or formula[0] in proposicao2:
           return True
-        elif len(expressao) >1:
+        else: 
+          return False
+      else:
+        if formula[0][0] in proposicao1 and formula[0][1] in proposicao2:
+          return True
+        else: 
           return False
     else:
       return False
-
-def checaproposicao(expressao):
-  if expressao[0] in proposicao:
-    if len(expressao) < 2:
-      return True
-    elif len(expressao) >1:
-      return False
   else:
     return False
-
-def checaformulaunaria(expressao):
-  if expressao[0] != "(":
-    return False
-  else:
-    if expressao[1] != "¬":
+    
+def checaFormulaUn(formula):
+  if formula[0] == abreParen and formula[1] == operadorUn:
+    formula1 = arrumaFormula1(formula[2:])
+    if len(formula) - len(formula1) != 3:
       return False
     else:
-      if not checaconstante(expressao[2]) and not checaproposicao(expressao[2]) and not expressao[2] == "(":
-        return False
+      if checaformula(formula1) and formula[-1] == ")":
+        return True
       else:
-        if expressao[2] == "(":
-          if not checaformulaunaria(expressao[2:-1]) and not checaformulabinaria(expressao[2:-1]):
-            return False
-        else:
-          if expressao[3] != ")":
-            return False
-
-def checaformulabinaria(expressao):
-  if expressao[0] != "(":
-    return False
+        return False
   else:
-    if expressao[1] not in ["∨","∧","→","↔"]:
+    return False
+
+def checaFormulaBin(formula):
+  formula1 = []
+  formula2 = []
+  formula3 = []
+  if formula[0] == abreParen and formula[1] in operadorBin:
+    formula1 = arrumaFormula1(formula[2:])
+    formula2 = arrumaFormula2(formula[2:])
+    formula3.append(formula1)
+    formula3.append(formula2)
+    if len(formula) - len(formula3) != 3:
       return False
     else:
-      if not checaconstante(expressao[2]) and not checaproposicao(expressao[2]) and not expressao[2] == "(":
-        return False
+      if checaformula(formula1) and checaformula(formula2) and formula[-1] == ")":
+        return True
       else:
-        if expressao[2] == "(":
-          if not checaformulaunaria(expressao[2:-1]) and not checaformulabinaria(expressao[2:-1]):
-            return False
-        else:
-          if not checaconstante(expressao[3]) and not checaproposicao(expressao[2]) and not expressao[2] == "(":
-            return False
-          else:
-            if expressao[2] == "(":
-              if not checaformulaunaria(expressao[2:-1]) and not checaformulabinaria(expressao[2:-1]):
-                return False
-              if expressao[3] != ")":
-                return False
-    
-    
+        return False
+  else:
+    return False
+      
 
 
 def checaformula(expressao):
-  for i in range(len(expressao)):
-    if expressao[i] not in validos:
-      if len(expressao[i]) >1:
-        if expressao[i][0] not in validos or expressao[i][1] not in validos:
-          expressao.append(": invalida")
-          return print(*expressao)
-      else:
-        expressao.append(": invalida")
-        return print(*expressao)
-  if checaconstante(expressao):
-    expressao.append(": valida")
-    return print(*expressao)
+  if type(expressao) == type("abcd"):
+    formula = expressao.rsplit(" ")
   else:
-    if checaproposicao(expressao):
-      expressao.append(": valida")
-      return print(*expressao)
-    else:
-      if expressao[0] == "(":
-        if checaformulaunaria(expressao):
-          expressao.append(": valida")
-          return print(*expressao)
-      else:
-        expressao.append(": invalida")
-        return print(*expressao)
-
-
-def arrumaString(expressao1):
+    formula = expressao
+  if (checaConstante(formula) or checaProposicao(formula) or checaFormulaUn(formula) or checaFormulaBin(formula)): 
+    return True
+  else:
+    return False
   
-  expressao = []
-  formula = ""
-  contadorString = 0
-  contadorParenteses = 0
-  while(contadorString < len(expressao1)):
-    if(expressao1[contadorString] == "(" and contadorString == 0):
-      formula.append(expressao1[contadorString])
-      contadorString = contadorString +1
-    else:
-      if(expressao1[contadorString] != " "):
-        if(expressao1[contadorString] == "("):
-          contadorParenteses = contadorParenteses + 1
-          formula = formula + "("
-          contadorString = contadorString +1
-          while(contadorParenteses > 0 and contadorString < len(expressao1)):
-            if(expressao1[contadorString] == "("):
-              contadorParenteses = contadorParenteses + 1
-              formula = formula + expressao1[contadorString]
-              contadorString = contadorString +1
-            else:
-              if(expressao1[contadorString] == ")"):
-                if(contadorParenteses == 1):
-                  formula = formula + ")"
-                  contadorString = contadorString +1
-                  contadorParenteses = 0
-                else:
-                  formula = formula + ")"
-                  contadorString = contadorString +1
-                  contadorParenteses  = contadorParenteses- 1
-              else:
-                if(contadorString == len(expressao1))-1:
-                  formula = formula + expressao1[contadorString]
-                  expressao.append(formula)
-                  formula = ""
-                else:
-                  formula = formula + expressao1[contadorString]
-                  contadorString = contadorString +1
-        else:
-          formula = formula + expressao1[contadorString]
-          contadorString = contadorString +1                  
-      else:
-        if(formula == ""):
-          contadorString = contadorString +1
-        else:
-          expressao.append(formula)
-          formula = ""
-          contadorString = contadorString +1
-      
-        
-        
-      
     
-      
-  print(expressao)    
-  return expressao
+def arrumaExpressao(expressao):
+  formula = expressao.rsplit(" ")
+  return print(formula)
 
+def arrumaFormula1(expressao):
+  formula = []
+  if expressao.count("(") > 0 and expressao.index("(") == 0:
+    if expressao.count(")") > 0:
+      contador = 1
+      formula = ["("]
+      while formula.count("(") != formula.count(")") and contador < len(expressao):
+        formula.append(expressao[contador])
+        contador = contador + 1
+    else:
+      formula = ["invalida"]
+  else:
+    formula = expressao[0]
+  
+  return formula
+
+def arrumaFormula2(expressao):
+  formula = []
+  formula1 = []
+  formula1 = arrumaFormula1(expressao)
+  formula = arrumaFormula1(limpaLista(expressao, formula1))
+  return formula
+  
+
+def limpaLista(lista1,lista2):
+  lista = []
+  n = len(lista2)
+  while n < len(lista1):
+    lista.append(lista1[n])
+    n = n + 1 
+ 
+
+  
+  return lista
+  
+  
 start()
-expressao = arrumaString(arquivo1[1])
-arrumaString(expressao[2])
-#checaformula(expressao)
+arrumaExpressao(arquivo[1])
+print(checaformula(arquivo[1]))
+arrumaExpressao(arquivo[2])
+print(checaformula(arquivo[2]))
+arrumaExpressao(arquivo[3])
+print(checaformula(arquivo[3]))

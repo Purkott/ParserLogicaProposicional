@@ -1,2 +1,7 @@
-1
-T v0 (1 2 3 4 )
+6
+( \neg a0 )
+( \leftrightarrow a b )
+( \leftrightarrow ( \leftrightarrow a b ) ( \neg c ) )
+( \vee a b )
+( \wedge c d )
+( \rightarrow e f ) 
